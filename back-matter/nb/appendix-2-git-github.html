@@ -1,0 +1,987 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Version control with using Git and GitHub</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css@digest=dfe6caa3a7d634c4db9b.css" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css@digest=dfe6caa3a7d634c4db9b.css" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css@digest=dfe6caa3a7d634c4db9b.css" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css@digest=dfe6caa3a7d634c4db9b.css" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css@v=8f2a1f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css@v=eba8b062.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css@v=4fa983c6.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css@v=95c83b7e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom-toggle-button.css@v=14db4526.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom-text-formatting.css@v=4ef71e6f.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js@digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js@digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js@digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js@v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js@v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js@v=dc90522c"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js@v=887ef09a"></script>
+    <script src="../../_static/design-tabs.js@v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js@v=c100c467"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'back-matter/nb/appendix-2-git-github';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="https://pythongis.org/search.html" />
+    <link rel="next" title="Using Python script files" href="appendix-3-script-files.html" />
+    <link rel="prev" title="Python programming best practices" href="appendix-1-best-practices.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="appendix-2-git-github.html#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="https://pythongis.org/search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../../_static/pythongis-logo.png" class="logo__image only-light" alt=" - Home"/>
+    <script>document.write(`<img src="../../_static/pythongis-logo.png" class="logo__image only-dark" alt=" - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Part I - Python essentials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../part1/index.html">Overview and learning goals</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../part1/chapter-01/index.html">1. Getting started</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-01/nb/0-learning-objectives.html">Learning objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-01/nb/00-motivation.html">1.1 Motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-01/nb/01-computers-and-programs.html">1.2 Computers and programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-01/nb/02-why-python.html">1.3 Why Python?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-01/nb/03-writing-and-running-python-code.html">1.4 Writing and running Python code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-01/nb/04-using-jupyterlab.html">1.5 Using JupyterLab for writing code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-01/nb/05-quick-start.html">1.6 Quickly getting started (without installing Python)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-01/nb/06-installation.html">1.7 Installing Python and adding libraries</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../part1/chapter-02/index.html">2. Basic programming concepts</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-02/nb/0-learning-objectives.html">Learning objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-02/nb/00-python-basics.html">2.1 Getting started with Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-02/nb/01-lists-and-indices.html">2.2 Lists and indices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-02/nb/02-text-and-numbers.html">2.3 Working with text and numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-02/nb/03-for-loops.html">2.4 for loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-02/nb/04-conditional-statements.html">2.5 Conditional statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-02/nb/05-functions.html">2.6 Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-02/nb/06-writing-scripts.html">2.7 Writing script files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-02/nb/07-modules.html">2.8 Loading and using modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-02/nb/08-exercises.html">Exercises</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../part1/chapter-03/index.html">3. Introduction to data analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-03/nb/0-learning-objectives.html">Learning objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-03/nb/00-pandas-basics.html">3.1 Getting started with data analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-03/nb/01-data-manipulation.html">3.2 Common tabular operations in pandas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-03/nb/02-data-analysis.html">3.3 Data wrangling, grouping and aggregation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-03/nb/03-temporal-data.html">3.4 Working with temporal data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-03/nb/04-exercises.html">Exercises</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../part1/chapter-04/index.html">4. Introduction to data visualization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-04/nb/0-learning-objectives.html">Learning objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-04/nb/00-plotting-in-python.html">4.1 Plotting in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-04/nb/01-basic-plotting.html">4.2 Plotting with pandas and matplotlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-04/nb/02-subplots.html">4.3 Creating subplots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-04/nb/03-plot-formatting.html">4.4 Effective plot design: line plots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part1/chapter-04/nb/04-exercises.html">Exercises</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part II - Introduction to GIS with Python</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../part2/index.html">Overview and learning goals</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../part2/chapter-05/index.html">5. Getting started</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-05/nb/0-learning-objectives.html">Learning objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-05/nb/00-motivation-to-use-python-for-gis.html">5.1 Motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-05/nb/01-introduction-to-geographic-data-in-python.html">5.2 Geographic data in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-05/nb/02-introduction-to-coordinate-reference-systems.html">5.3 Coordinate reference systems</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../part2/chapter-06/index.html">6. Vector data processing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-06/nb/0-learning-objectives.html">Learning objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-06/nb/00-introduction-to-geographic-objects.html">6.1 Representing geographic data in vector format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-06/nb/01-geodataframe.html">6.2 Introduction to geopandas GeoDataFrames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-06/nb/02-geometric-operations.html">6.3 Common geometric operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-06/nb/03-coordinate-reference-system.html">6.4 Working with map projections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-06/nb/04-geocoding.html">6.5 Geocoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-06/nb/05-spatial-queries.html">6.6 Selecting data based on spatial relationships</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-06/nb/06-spatial-join.html">6.7 Spatial join</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-06/nb/07-nearest-neighbour.html">6.8 Nearest neighbour analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-06/nb/08-overlay-analysis-with-vector-data.html">6.9 Vector overlay operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-06/nb/09-data-classification.html">6.10 Data classification</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../part2/chapter-07/index.html">7. Raster data processing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-07/nb/0-learning-objectives.html">Learning objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-07/nb/00-introduction-to-raster-data.html">7.1 Representing geographic data in raster format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-07/nb/01-data-structures-xarray.html">7.2 Introduction to data structures in xarray</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-07/nb/02-common-raster-operations.html">7.3 Common raster operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-07/nb/03-coordinate-reference-systems-raster.html">7.4 Coordinate reference system management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-07/nb/04-map-algebra.html">7.5 Map algebra</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../part2/chapter-08/index.html">8. Geographic data visualization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-08/nb/0-learning-objectives.html">Learning objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-08/nb/00-introduction-to-geographic-visualization.html">Introduction to geographic visualization</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-08/nb/01-static-vector-maps.html">8.2 Static maps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-08/nb/02-static-raster-maps.html">8.3 Visualizing raster layers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-08/nb/03-interactive-maps.html">8.4 Interactive maps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-08/nb/05-exercises.html">Exercises</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../part2/chapter-09/index.html">9. Using online geographic data sources</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-09/nb/0-learning-objectives.html">Learning objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-09/nb/00-retrieving-osm-data.html">9.1 Retrieving OpenStreetMap data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-09/nb/01-retrieving-data-from-wfs.html">9.2 Retrieving data from Web Feature Service (WFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-09/nb/02-retrieving-data-from-wcs.html">9.3 Retrieving data from Web Coverage Service (WCS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-09/nb/03-read-data-from-spatial-databases.html">9.4 Reading data from spatial databases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part2/chapter-09/nb/04-exercises.html">Exercises</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part III - Case studies</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../part3/chapter-10/index.html">10. Spatial interpolation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../part3/chapter-10/nb/00-introduction-to-spatial-interpolation.html">Introduction to spatial interpolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part3/chapter-10/nb/01-inverse-distance-weighting.html">Inverse Distance Weighting interpolation with Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part3/chapter-10/nb/02-exercises.html">Exercises</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../part3/chapter-11/index.html">11. Spatial network analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../part3/chapter-11/nb/00-introduction-to-spatial-network-analysis.html">Introduction to spatial network analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part3/chapter-11/nb/02-multimodal-spatial-accessibility-modelling.html">Multimodal spatial accessibility analysis with Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../part3/chapter-11/nb/03-exercises.html">Exercises</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../part3/chapter-12/index.html">12. Watershed analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../part3/chapter-12/nb/00-watershed-analysis-with-pysheds.html">Watershed analysis with pysheds</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../part3/chapter-13/index.html">13. Conclusions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../appendix-a.html">A. Working effectively in Python</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="appendix-0-python-environments.html">A.1 Tips for maintaining Python environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix-1-best-practices.html">A.2 Python programming best practices</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="appendix-2-git-github.html#">A.3 Version control with using Git and GitHub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix-3-script-files.html">A.4 Using Python script files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix-4-testing-and-debugging.html">A.5 Testing and debugging your code</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix-b.html">B. Solutions to questions and exercises</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="appendix-5-question-solutions.html">B.1 Question solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix-6-exercise-solutions.html">B.2 Exercise solutions</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Back matter</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">About the authors</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Datasets</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../data/index.html">Data overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data/noaa-data.html">NOAA Weather data</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/Python-GIS-book/site/master?urlpath=lab/tree/source/back-matter/nb/appendix-2-git-github.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/Python-GIS-book/site/edit/main/source/back-matter/nb/appendix-2-git-github.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button"
+   title="Suggest edit"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/back-matter/nb/appendix-2-git-github.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Version control with using Git and GitHub</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#the-problem">The problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#what-is-version-control">What is version control?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#what-is-git">What is Git?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#what-is-github">What is GitHub?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#basic-vocabulary">Basic vocabulary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#using-git-and-github">Using Git and GitHub</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#key-concepts">Key concepts</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#preparations">Preparations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#creating-a-personal-access-token">Creating a Personal Access Token</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#creating-a-fork-of-the-book-notebooks">Creating a fork of the book notebooks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#using-git-with-the-jupyterlab-git-extension">Using Git with the JupyterLab Git extension</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#cloning-a-repository">Cloning a repository</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#checking-the-git-status">Checking the Git status</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#making-changes">Making changes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#staging-changed-file-s">Staging changed file(s)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#committing-changes">Committing changes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#pushing-changes-to-github">Pushing changes to GitHub</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#using-git-from-the-command-line">Using Git from the command line</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#essential-command-line-tools">Essential command line tools</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#opening-a-terminal-window-in-juptyerlab">Opening a terminal window in JuptyerLab</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#configuring-your-git-credentials">Configuring your Git credentials</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#basic-git-commands">Basic Git commands</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#other-handy-git-topics">Other handy Git topics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#managing-remote-repositories">Managing remote repositories</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#branches">Branches</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#resolving-conflicts">Resolving conflicts</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#additional-resources">Additional resources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#footnotes">Footnotes</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="version-control-with-using-git-and-github">
+<h1>Version control with using Git and GitHub<a class="headerlink" href="appendix-2-git-github.html#version-control-with-using-git-and-github" title="Link to this heading">#</a></h1>
+<p>This appendix provides an introduction to version control using Git and some step-by-step instructions about how to record changes to our files using Git and GitHub.</p>
+<section id="the-problem">
+<h2>The problem<a class="headerlink" href="appendix-2-git-github.html#the-problem" title="Link to this heading">#</a></h2>
+<p><img alt="Figure A.X. An example of the challenge of tracking versions of a manuscript. Source: https://phdcomics.com/comics/archive.php?comicid=1531." src="../../_images/phd101212s.png" /></p>
+<p><em><strong>Figure A.X</strong>. An example of the challenge of tracking versions of a manuscript. Source: <a class="reference external" href="https://phdcomics.com/comics/archive.php?comicid=1531">https://phdcomics.com/comics/archive.php?comicid=1531</a>.</em></p>
+<p>We’ve all been in this situation before, and it seems ridiculous to have multiple nearly identical versions of the same document. Some word processors can help us deal with this situation to some extent, by storing past revisions or using Microsoft Word’s “Track Changes” feature. However, this can be quite impractical if you would like to see modifications that are older than your previous round of changes. And just like changes to a text document, the same issue can arise when making changes to software. And even worse, sometimes your changes break the program entirely. Luckily there are tools to help avoid this problem.</p>
+</section>
+<section id="what-is-version-control">
+<h2>What is version control?<a class="headerlink" href="appendix-2-git-github.html#what-is-version-control" title="Link to this heading">#</a></h2>
+<p><em><a class="reference internal" href="glossary.html#term-Version-control"><span class="xref std std-term">Version control</span></a></em> <a class="footnote-reference brackets" href="appendix-2-git-github.html#versioncontrol" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> is used to track and store changes in your files without losing the history of your previous changes. Version control systems start with a base version of a document and then save only the changes you make at each step of the way. You can think of it as a tape: if you rewind the tape and start at the base document, then you can play back each change and end up with your latest version.</p>
+<p><img alt="Figure A.X. Illustration of committing changes. Source: https://swcarpentry.github.io/git-novice/01-basics.html." src="../../_images/play-changes.png" /></p>
+<p><em><strong>Figure A.X</strong>. Illustration of committing changes. Source: <a class="reference external" href="https://swcarpentry.github.io/git-novice/01-basics.html">https://swcarpentry.github.io/git-novice/01-basics.html</a>.</em></p>
+<p>A version control system is a tool that keeps track of these changes for us and helps us version our files (<a class="reference external" href="https://en.wikipedia.org/wiki/Merge_(version_control)">and even merge different versions, a more advanced topic</a>). It allows you to decide which changes should be included the next version, called a commit, and keeps useful metadata about those changes. The complete history of commits for a particular project and their metadata make up a repository (such as our <a class="reference external" href="https://github.com/Python-GIS-book/site">book material repository</a>). Repositories can be kept in sync between different computers and users facilitating collaboration among different people.</p>
+<p>One of the most obvious reasons to use version control is to avoid the situation illustrated in Figure A.X entirely by tracking the full history of your changes in a systematic way without the need to have multiple versions of the same file. This history of changes then provides the ability to “go back in time.” Thus, if something goes wrong with your program, you can start from some earlier version of the file when everything was still working. You can also easily compare the differences between versions and see exactly what has changed. In addition to these benefits, version control makes it possible for multiple people to work on the same file or project at the same time while still keeping track of their own changes to the files.</p>
+<p>There are multiple different Version Control Systems (VCS; software for doing version control) and one of the most popular ones is <a class="reference external" href="https://en.wikipedia.org/wiki/Git_(software)">Git</a>.</p>
+</section>
+<section id="what-is-git">
+<h2>What is Git?<a class="headerlink" href="appendix-2-git-github.html#what-is-git" title="Link to this heading">#</a></h2>
+<p><img alt="The Git logo by Jason Long, licensed under the Creative Commons Attribution 3.0 Unported License." src="../../_images/Git-Logo-2Color.png" /></p>
+<p><em>The Git logo by Jason Long, licensed under the <a class="reference external" href="https://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported License</a>.</em></p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Git_(software)">Git</a> is a version control software (developed in 2005 by a rather famous Finn named Linus Torvalds, who also created Linux!) that is used to track and store changes in your files (often source code for programs) without losing the history of past changes. Files in Git are stored in a repository, which you can simply think of as a directory containing files (or other directories) related to a single “project”. In practice git takes “snapshots” of your files each time you commit changes and follows the idea of <a class="reference external" href="https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control">distributed version control</a>. Git is widely used by professionals to keep track of what they’ve done and to collaborate with other people. Git is the version control system that is running behind the scenes and used with GitHub (“Git” + “Hub”!).</p>
+</section>
+<section id="what-is-github">
+<h2>What is GitHub?<a class="headerlink" href="appendix-2-git-github.html#what-is-github" title="Link to this heading">#</a></h2>
+<p><img alt="The GitHub Logo." src="../../_images/GitHub_Logo.png" /></p>
+<p><em>The GitHub Logo.</em></p>
+<p>GitHub provides a handful of important features that build upon what is offered by Git alone:</p>
+<ol class="arabic simple">
+<li><p>GitHub relies on Git. The GitHub is a web based Git repository hosting service in principle. Thus, it would not exist without the version control system Git. Git is running all the time in the background when using GitHub.</p></li>
+<li><p>GitHub is a social (collaborative) network. GitHub is much more than just a hosting service for Git repositories as it is also a social network where people can collaborate and communicate with each other. It is easy to invite other GitHub users to work together on the same project and to discuss project developments. It should thus come as no surprise that GitHub is a highly popular place for sharing codes both openly to the entire world and to smaller groups of collaborators working on the same project.</p></li>
+<li><p>GitHub supports open source software and open science. Sharing your work publicly to others is one of the basic principles of open science. All publicly available GitHub repositories can be downloaded to your own local computer where you can start modifying the codes for your own purpose. This process is called “forking”. Be aware, however, that you should always check and follow the license terms mentioned in the project, which tell you what you can (or can not) do with the codes that are shared. It is possible that there might be some limitations for commercial use of the codes, for example.</p></li>
+<li><p>GitHub provides a home for software documentation. GitHub repositories are often also used as web pages for software projects. In GitHub, such web pages typically include technical documentation, instructions, and examples of how to use the codes or software within that project. It is extremely important that you document the codes and programs that you have created, and GitHub provides a nice platform for doing this and sharing the documentation. Almost every GitHub repository (and possibly its subfolders) includes a file called <code class="docutils literal notranslate"><span class="pre">README.md</span></code>, which is the front-page of the given repository in GitHub by default. These files are written using a specific simple language called <a class="reference external" href="https://daringfireball.net/projects/markdown/">Markdown</a>, which can be used to create nice looking web documents with rich formatting, figures, tables, and so on. Markdown is very easy (and fast) to use once you have learned the basic syntax of how different textual elements are written.</p></li>
+<li><p>GitHub includes useful online tools. There are multiple useful tools integrated into GitHub, such as the possibility to edit the documents or codes directly on the web site. What is even better is that Git is always running in background, so all changes made in the web browser will be saved as git commits. It is also possible to browse the complete history of a file directly from GitHub’s online interface and view all of the changes that have been made.</p></li>
+<li><p>GitHub has issue tracking. In GitHub it is also possible to give feedback to the developer by creating an “issue” that can be used to report a bug that was found in the code or software, for example. Issues can also be used to track ideas, enhancements, or other plans to projects on GitHub. You can even use issues to organize tasks you’d like to accomplish, such as adding new features or revising old ones.</p></li>
+</ol>
+<p>Usually the Git software is run from a command prompt, however GitHub also provides a way to use Git commands without the need to run any commands in a terminal. It is also possible to use Git and GitHub in some <a class="reference internal" href="glossary.html#term-Integrated-Development-Environment"><span class="xref std std-term">Integrated Development Environments (IDEs)</span></a>.</p>
+</section>
+<section id="basic-vocabulary">
+<h2>Basic vocabulary<a class="headerlink" href="appendix-2-git-github.html#basic-vocabulary" title="Link to this heading">#</a></h2>
+<p>Here are a few basic terms that are used often when using git and GitHub (not exhaustive).</p>
+<ul class="simple">
+<li><p><em><a class="reference internal" href="glossary.html#term-Repository"><span class="xref std std-term">Repository</span></a></em>: A location where all the files for a particular project are stored, often referred to as a “repo.” Each project will have its own repo, which is usually located on a server and can be accessed by a unique URL (e.g., a link to GitHub page).</p></li>
+<li><p><em><a class="reference internal" href="glossary.html#term-Git-commit"><span class="xref std std-term">Commit</span></a></em>: To commit is to write or merge the changes made in the working copy back to the repository. When you commit, you are basically taking a “snapshot” of your repository at that point in time, giving you a checkpoint to which you can reevaluate or restore your project to any previous state. The terms ‘commit’ or ‘checkin’ can also be used as nouns to describe the new revision that is created as a result of committing.</p></li>
+<li><p><em><a class="reference internal" href="glossary.html#term-Revision"><span class="xref std std-term">Revision</span></a></em> / <em><a class="reference internal" href="glossary.html#term-Version"><span class="xref std std-term">Version</span></a></em>: A revision or a version is any change in made in any form to a document(s).</p></li>
+<li><p><em><a class="reference internal" href="glossary.html#term-Git-clone"><span class="xref std std-term">Clone</span></a></em>: Cloning means creating a repository containing the revisions from another repository. This is equivalent to pushing or pulling into an empty (newly initialized) repository. As a noun, two repositories can be said to be clones if they are kept synchronized, and contain the same revisions.</p></li>
+<li><p><em><a class="reference internal" href="glossary.html#term-Git-pull"><span class="xref std std-term">Pull</span></a></em> / <em><a class="reference internal" href="glossary.html#term-Git-push"><span class="xref std std-term">Push</span></a></em>: Copy revisions from one repository to another. Pull is initiated by the receiving repository, while push is initiated by the source. Fetch is sometimes used as a synonym for pull, or to mean a pull followed by an update.</p></li>
+<li><p><em><a class="reference internal" href="glossary.html#term-Git-merge"><span class="xref std std-term">Merge</span></a></em>: A merge or integration is an operation in which two sets of changes are applied to a file or set of files.</p></li>
+</ul>
+</section>
+<section id="using-git-and-github">
+<h2>Using Git and GitHub<a class="headerlink" href="appendix-2-git-github.html#using-git-and-github" title="Link to this heading">#</a></h2>
+<p>The following sections cover the very basics of version control using Git and GitHub. Specifically, we will introduce how to use JupyterLab to:</p>
+<ol class="arabic simple">
+<li><p>Clone a repository from GitHub</p></li>
+<li><p>Add changes</p></li>
+<li><p>Commit changes</p></li>
+<li><p>Push changes to GitHub</p></li>
+</ol>
+<p>We will show how to complete these steps using both the JupyterLab git extension (recommended) and using Git from the command line.</p>
+<section id="key-concepts">
+<h3>Key concepts<a class="headerlink" href="appendix-2-git-github.html#key-concepts" title="Link to this heading">#</a></h3>
+<p>We use Git to (1) record changes to our files over time and (2) to communicate between the local repository on our computer and the remote repository (repo) on GitHub. Each Git repo contains all the files and folders associated with a project, as well as the revision history of each entity. In general, it is recommended that each project, library, or discrete piece of software have it’s own repository. For example, Python libraries such as <a class="reference external" href="https://github.com/pandas-dev/pandas"><code class="docutils literal notranslate"><span class="pre">pandas</span></code></a>, <a class="reference external" href="https://github.com/numpy/numpy"><code class="docutils literal notranslate"><span class="pre">numpy</span></code></a>, and <a class="reference external" href="https://github.com/matplotlib/matplotlib"><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></a> all have their own repositories.</p>
+<p>The most common starting point for working with software in Git is creating a copy of the software, or “cloning” it. This can be done using the command <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span></code>, for example. For repositories you have already copied, you can download the latest changes using the command using <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code>, which will fetch (and merge) new changes from GitHub. Finally, the command <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span></code> publishes any local changes to GitHub. You can find more information about interacting with Git projects on the <a class="reference external" href="https://git-scm.com/book/en/v2/Appendix-C:-Git-Commands-Sharing-and-Updating-Projects">Git Source Control Management site</a>.</p>
+<p><img alt="Figure A.X. Update your Git project using the pull and push commands. Always pull before you push, especially when working in a shared project." src="../../_images/pull-push-illustration.png" /></p>
+<p><em><strong>Figure A.X</strong>. Update your Git project using the pull and push commands. Always pull before you push, especially when working in a shared project.</em></p>
+<p>The version control history consists of snapshots of all the files in your project. In order to record changes to your files, we first add changes to a so called staging area (using the command <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span></code>). The idea is that you can have a (sometimes messy) working directory, and by using <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span></code> you tell Git precisely which files to include in the next committed snapshot. After this, the command <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span></code> can be used to record a permanent snapshot of the staged changes. You can find more information about snapshotting on the <a class="reference external" href="https://git-scm.com/book/en/v2/Appendix-C:-Git-Commands-Basic-Snapshotting">Git Source Control Management site</a>.</p>
+<p><img alt="Figure A.X. Version control steps using Git. Adapted from https://git-scm.com/about/staging-area." src="../../_images/Git_illustration.png" /></p>
+<p><em><strong>Figure A.X</strong>. Version control steps using Git. Adapted from <a class="reference external" href="https://git-scm.com/about/staging-area">https://git-scm.com/about/staging-area</a>.</em></p>
+</section>
+</section>
+<section id="preparations">
+<h2>Preparations<a class="headerlink" href="appendix-2-git-github.html#preparations" title="Link to this heading">#</a></h2>
+<p>With a general sense of how Git and GitHub work, we can now go through the basics of using Git with a hands-on example. For this we will use the “student” version of the notebooks for this book, which can be found on GitHub at <a class="github reference external" href="https://github.com/Python-GIS-book/student-notebooks">Python-GIS-book/student-notebooks</a>. In order to do this, we assume:</p>
+<ol class="arabic simple">
+<li><p>You have installed the Python environment for this course using <a class="reference internal" href="../../part1/chapter-01/nb/06-installation.html"><span class="doc">the instructions from Chapter 1.7</span></a>.</p></li>
+<li><p>You have an account on <a class="reference external" href="https://github.com">GitHub.com</a> If not, now is a good time to create one.</p></li>
+</ol>
+<p>Before we continue, open a new JupyterLab session if you do not already have one open.</p>
+<section id="creating-a-personal-access-token">
+<h3>Creating a Personal Access Token<a class="headerlink" href="appendix-2-git-github.html#creating-a-personal-access-token" title="Link to this heading">#</a></h3>
+<p>We will start by creating a Personal Access Token for our GitHub account that will allow you to save changes you make to files in GitHub. A Personal Access Token can be used for many things, but it is required when trying to push changes or access files in private repositories to which you have access rights, for example. For our use, the token will enable us to both push and pull files to/from GitHub.</p>
+<p>You can find detailed instructions about how to create a Personal Access Token in the <a class="reference external" href="https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token">GitHub documentation</a> <a class="footnote-reference brackets" href="appendix-2-git-github.html#token" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>. However, we note a few things below that may be helpful in the process.</p>
+<ul class="simple">
+<li><p>You will need to verify your email address for your GitHub account to create a Personal Access Token. See <a class="reference external" href="https://docs.github.com/en/get-started/signing-up-for-github/verifying-your-email-address">GitHub email verification</a> <a class="footnote-reference brackets" href="appendix-2-git-github.html#email" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> for details.</p></li>
+<li><p>We are creating a “classic” token using <strong>Generate new token (classic)</strong>.</p></li>
+<li><p>You can name your token whatever you like, but a name like “PythonGIS” might make sense.</p></li>
+<li><p>The expiration date will be short by default. We recommend an expiration date of one year.</p></li>
+<li><p>Typical scopes (or permissions) for tokens include: <strong>repo</strong>, <strong>admin:repo_hook</strong>, and <strong>delete_repo</strong>.</p></li>
+<li><p><strong>Important</strong>: Your token will only be visible to you once, so we recommend saving a copy in a secure location, such as with a password manager. Remember, anyone with the token can access, edit, or even delete repositories within the scope of that token!</p></li>
+</ul>
+</section>
+<section id="creating-a-fork-of-the-book-notebooks">
+<h3>Creating a fork of the book notebooks<a class="headerlink" href="appendix-2-git-github.html#creating-a-fork-of-the-book-notebooks" title="Link to this heading">#</a></h3>
+<p>In order to make a copy of the book notebooks that you can access and edit, we will create a <em><a class="reference internal" href="glossary.html#term-Fork"><span class="xref std std-term">fork</span></a></em> of the student version of the book materials. You can create your fork by visiting <a class="github reference external" href="https://github.com/Python-GIS-book/student-notebooks">Python-GIS-book/student-notebooks</a> and clicking on the <strong>Fork</strong> button on the top left side of the page (Figure A.X).</p>
+<p><img alt="Figure A.X. Creating a for in GitHub." src="../../_images/fork-repo.png" /></p>
+<p><em><strong>Figure A.X</strong>. Creating a for in GitHub.</em></p>
+<p>After clicking on the <strong>Fork</strong> button, you can leave everything as it is on the Create a new fork page and simply click <strong>Create fork</strong>. This will create your personal copy, which can be found in GitHub at <code class="docutils literal notranslate"><span class="pre">https://github.com/[your</span> <span class="pre">GitHub</span> <span class="pre">username]/student-notebooks</span></code>. For example, <code class="docutils literal notranslate"><span class="pre">https://github.com/davewhipp/student-notebooks</span></code>.</p>
+<p>Now that your personal fork has been created, you can go to the URL of your fork (e.g., <code class="docutils literal notranslate"><span class="pre">https://github.com/davewhipp/student-notebooks</span></code>), click on the <strong>Code</strong> button, and copy the URL listed there under HTTPS. Be sure you go to your personal copy of the book materials at <code class="docutils literal notranslate"><span class="pre">https://github.com/[your</span> <span class="pre">GitHub</span> <span class="pre">username]/student-notebooks</span></code>!</p>
+</section>
+</section>
+<section id="using-git-with-the-jupyterlab-git-extension">
+<h2>Using Git with the JupyterLab Git extension<a class="headerlink" href="appendix-2-git-github.html#using-git-with-the-jupyterlab-git-extension" title="Link to this heading">#</a></h2>
+<p>Our next task is to create a copy of your fork on your own computer by cloning the files from GitHub. To do this, we will use the Git extension for JupyterLab, as that will make it easy to both pull and push changes to any files as you work with them.</p>
+<section id="cloning-a-repository">
+<h3>Cloning a repository<a class="headerlink" href="appendix-2-git-github.html#cloning-a-repository" title="Link to this heading">#</a></h3>
+<p>You can start by navigating to a directory in the JupyterLab file browser, where you would like to store your copy of the book materials. Once there, create a directory for the book materials, such as <code class="docutils literal notranslate"><span class="pre">PythonGIS</span></code>. Double click on the new directory to enter it in the JupyterLab file browser. Next, click on the Git extension button to activate it, and then click on <strong>Clone a repository</strong> (Figure A.X).</p>
+<p><img alt="Figure A.X. Using the JupyterLab Git extension." src="../../_images/git-plugin.png" /></p>
+<p><em><strong>Figure A.X</strong>. Using the JupyterLab Git extension.</em></p>
+<p>Once the Clone a repo dialog box appears, paste in the URL to your fork of the book materials and click <strong>Clone</strong>. You can leave the checkboxes ticked as they are. This is equivalent to the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span></code> command in a terminal.</p>
+<p>If cloning was successful you should now see a directory titled <code class="docutils literal notranslate"><span class="pre">student-notebooks</span></code> in the JupyterLab file browser.</p>
+</section>
+<section id="checking-the-git-status">
+<h3>Checking the Git status<a class="headerlink" href="appendix-2-git-github.html#checking-the-git-status" title="Link to this heading">#</a></h3>
+<p>You can now double click on the <code class="docutils literal notranslate"><span class="pre">student-notebooks</span></code> directory to enter it, and then activate the Git extension once again to view some basic information. This includes which repository you’re working in, the branch you are in within the repository, and whether any files have changed or are ready to be committed in Git, for example (Figure A.X). This is the equivalent of running the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code> command in a terminal.</p>
+<p><img alt="Figure A.X. Checking the repository status in the JupyterLab Git extension." src="../../_images/git-status.png" /></p>
+<p><em><strong>Figure A.X</strong>. Checking the repository status in the JupyterLab Git extension.</em></p>
+</section>
+<section id="making-changes">
+<h3>Making changes<a class="headerlink" href="appendix-2-git-github.html#making-changes" title="Link to this heading">#</a></h3>
+<p>Now we can make our first change to one of the repository files. Return to the JupyterLab file browser and double click to open the <code class="docutils literal notranslate"><span class="pre">README.md</span></code> file. In the tab that opens in JupyterLab, make a small change to the file, such as adding the text “I like Python!” at the end of the document. Once you finish editing, save your changes.</p>
+<p><img alt="Figure A.X. Making a change to a file." src="../../_images/changing-a-file.png" /></p>
+<p><em><strong>Figure A.X</strong>. Making a change to a file.</em></p>
+<p>After saving, return to the Git extension to check the status of the repository. You should see <code class="docutils literal notranslate"><span class="pre">README.md</span></code> listed under <strong>Changed</strong> files. Note that you can ignore temporary checkpoint files, such as <code class="docutils literal notranslate"><span class="pre">README-checkpoint.md</span></code>, which are automatically generated backup copies of files in JupyterLab.</p>
+<p><img alt="Figure A.X. Changed file status in the JupyterLab extension." src="../../_images/changed-file.png" /></p>
+<p><em><strong>Figure A.X</strong>. Changed file status in the JupyterLab extension.</em></p>
+</section>
+<section id="staging-changed-file-s">
+<h3>Staging changed file(s)<a class="headerlink" href="appendix-2-git-github.html#staging-changed-file-s" title="Link to this heading">#</a></h3>
+<p>These changes are not yet staged for commit, which means that we need to add them first to the list of files we intend to save in a permanent snapshot in Git (i.e., the staging area). To add a file to the staging area, right click on the file in the JupyterLab Git extension and then click <strong>+ Stage</strong>. You should now see the file under <strong>Staged</strong> files. This is the equivalent of running the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span></code> command in a terminal.</p>
+<p><img alt="Figure A.X. Staging a file in the JupyterLab extension." src="../../_images/stage-file.png" /></p>
+<p><em><strong>Figure A.X</strong>. Staging a file in the JupyterLab extension.</em></p>
+<p>If you accidentally stage a file or wish to remove it for any reason, simply right click on a staged file and select <strong>- Unstage</strong> to return it to the <strong>Changed</strong> list.</p>
+</section>
+<section id="committing-changes">
+<h3>Committing changes<a class="headerlink" href="appendix-2-git-github.html#committing-changes" title="Link to this heading">#</a></h3>
+<p>Now that the changed file is in the staging area, we can create we can create a permanent snapshot by committing the changes. It is important to always remember to write a short, informative commit message to accompany your changes so you document how the file(s) have changed! Type a message into the commit message text box and then click <strong>COMMIT</strong> to save a permanent snapshot of your changes. This is the equivalent of running <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">-m</span> <span class="pre">&quot;commit</span> <span class="pre">message&quot;</span></code> in a terminal.</p>
+<p><img alt="Figure A.X. Committing a change in the JupyterLab extension." src="../../_images/commit-change.png" /></p>
+<p><em><strong>Figure A.X</strong>. Committing a change in the JupyterLab extension.</em></p>
+<p>Once you click <strong>COMMIT</strong>, the Git extension will most likely ask you to enter your name and email address. This is because every commit in Git needs to record not only what has changed, but also who made the change (including their email address!). You can use the same information you used when creating your GitHub account.</p>
+<p>Once the commit succeeds, you should see the latest set of changes in the History tab of the JupyterLab Git extension. The output here is the equivalent of running <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span></code> in a terminal.</p>
+<p><img alt="Figure A.X. Repository history in the JupyterLab extension." src="../../_images/commit-history.png" /></p>
+<p><em><strong>Figure A.X</strong>. Repository history in the JupyterLab extension.</em></p>
+<p>Note that you will also see earlier changes that have been made to the files in your repository. Remember, Git will record all changes since the Git repository was created!</p>
+</section>
+<section id="pushing-changes-to-github">
+<h3>Pushing changes to GitHub<a class="headerlink" href="appendix-2-git-github.html#pushing-changes-to-github" title="Link to this heading">#</a></h3>
+<p>Our last step is to synchronize our local changes with the remote repository hosted on GitHub. To do this we will first pull changes from GitHub and then push our modified files to GitHub. It is always good to pull changes before pushing to ensure that any remote changes do not conflict with the changes you are trying to push. You may have already noticed that there is an orange dot that appears in the JuptyerLab git extension indicating we have changes that have not yet been pushed (e.g., Figure A.X).</p>
+<p>We can pull any changes from GitHub by clicking on the cloud icon with an arrow pointing downwards (Figure A.X). If everything is OK, you should see “Successfully pulled” in the bottom right corner of the JupyterLab window shortly after clicking. Now you can push the changes to GitHub by clicking the cloud icon with an arrow pointing upwards (Figure A.X). This is the equivalent of running the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span></code> command in a terminal.</p>
+<p>Most likely, you will now be prompted to enter your GitHub user credentials. When the Git credentials required dialog box appears, enter your GitHub username, your Personal Access Token, and then click <strong>Ok</strong>. You GitHub credentials can be managed in a terminal using the command <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">config</span></code>.</p>
+<p>If you now visit your repository in GitHub, you should find your changed have been pushed from JupyterLab!</p>
+</section>
+</section>
+<section id="using-git-from-the-command-line">
+<h2>Using Git from the command line<a class="headerlink" href="appendix-2-git-github.html#using-git-from-the-command-line" title="Link to this heading">#</a></h2>
+<p>Although it is likely easiest to use Git from the JupyterLab Git extension, we also provide a brief overview of how to use Git from the command line (or terminal) here.</p>
+<section id="essential-command-line-tools">
+<h3>Essential command line tools<a class="headerlink" href="appendix-2-git-github.html#essential-command-line-tools" title="Link to this heading">#</a></h3>
+<p>You will need to know a couple of basic command-line commands in order to use Git from the command line. Code Academy’s <a class="reference external" href="https://www.codecademy.com/articles/command-line-commands">list of command line commands</a> <a class="footnote-reference brackets" href="appendix-2-git-github.html#command-line" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a> provides a good overview of commonly used commands for navigating through files on the command line. For using Git on the command line, you should at least be familiar with the following commands.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ls</span></code>: List the contents of the current directory.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-a</span></code>: List the contents of the current directory including hidden files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cd</span></code>: Change directories. For example, <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">student-notebooks</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">..</span></code>: Change to the parent directory (up one directory level).</p></li>
+</ul>
+</section>
+<section id="opening-a-terminal-window-in-juptyerlab">
+<h3>Opening a terminal window in JuptyerLab<a class="headerlink" href="appendix-2-git-github.html#opening-a-terminal-window-in-juptyerlab" title="Link to this heading">#</a></h3>
+<p>You can open a terminal window in JuptyerLab by going to <strong>File</strong> -&gt; <strong>New</strong> -&gt; <strong>Terminal</strong> in the menu bar or clicking on the <strong>Terminal</strong> button in the JuptyerLab Launcher tab. You can confirm that Git is working from the Terminal by typing <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">--version</span></code> and pressing Enter. You should see the Git version information.</p>
+</section>
+<section id="configuring-your-git-credentials">
+<h3>Configuring your Git credentials<a class="headerlink" href="appendix-2-git-github.html#configuring-your-git-credentials" title="Link to this heading">#</a></h3>
+<p>You can configure Git to remember your identity using the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">config</span></code> command. You (hopefully) only need to do this once if working on your own computer. The basic credential commands to define your Git username and email address are:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.name<span class="w"> </span><span class="s2">&quot;[firstname lastname]&quot;</span>
+git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.email<span class="w"> </span><span class="s2">&quot;[email@example.com]&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="basic-git-commands">
+<h3>Basic Git commands<a class="headerlink" href="appendix-2-git-github.html#basic-git-commands" title="Link to this heading">#</a></h3>
+<p>The basic workflow of cloning a repository, adding changes to the staging area, committing, and pushing the changes can be completed using these command-line commands below:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">[URL]</span></code>: Retrieve a repository from a remote location (often from GitHub).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code>: Check the status of your repository (use this command often!).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span> <span class="pre">[file(s)]</span></code>: Add files to the staging area (so they are ready for the next commit).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">-m</span> <span class="pre">&quot;[descriptive</span> <span class="pre">message]&quot;</span></code>: Commit staged files as a new snapshot.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code>: Bring the local branch up to date (fetch and merge changes from the remote).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span></code>: Transmit local commits to the remote repository.</p></li>
+</ul>
+<p>You can find some other useful Git commands from the <a class="reference external" href="https://education.github.com/git-cheat-sheet-education.pdf">GitHub GIT CHEAT SHEET</a> <a class="footnote-reference brackets" href="appendix-2-git-github.html#cheat-sheet" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>.</p>
+</section>
+</section>
+<section id="other-handy-git-topics">
+<h2>Other handy Git topics<a class="headerlink" href="appendix-2-git-github.html#other-handy-git-topics" title="Link to this heading">#</a></h2>
+<section id="managing-remote-repositories">
+<h3>Managing remote repositories<a class="headerlink" href="appendix-2-git-github.html#managing-remote-repositories" title="Link to this heading">#</a></h3>
+<p><em><a class="reference internal" href="glossary.html#term-Git-remote"><span class="xref std std-term">Remote repositories</span></a></em> are versions of your project that are hosted on a network server system (such as GitHub). When you clone a repository using <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span></code>, Git will automatically start tracking the remote repository from where the project was cloned. You can use the command <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">remote</span> <span class="pre">-v</span></code> in a terminal, for example, to check which remote repository your local repository is tracking. Using this command you could, for instance, confirm that you are working with your own copy of the student notebooks as the command should show the location of the fork you created if you did so earlier. This can be quite important because you may have problems with permissions if you clone a repository that you do not have permission to push changes to! You can find more information about managing remotes in the <a class="reference external" href="https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes">Git Source Control Management documentation</a> <a class="footnote-reference brackets" href="appendix-2-git-github.html#remotes" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>.</p>
+</section>
+<section id="branches">
+<h3>Branches<a class="headerlink" href="appendix-2-git-github.html#branches" title="Link to this heading">#</a></h3>
+<p><em><a class="reference internal" href="glossary.html#term-Git-branch"><span class="xref std std-term">Branches</span></a></em> are parallel versions of code in a repository that start from a specific snapshot and can develop independently without affecting the original files used to make the branch. In the repositories that we are using most of the time, the base branch is called <code class="docutils literal notranslate"><span class="pre">main</span></code>, so you may see references to that under “Current branch” in the JupyterLab Git extension, for example. When pushing changes to the <code class="docutils literal notranslate"><span class="pre">main</span></code> branch of a Git repository in a terminal, we can type <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span></code>, however the complete syntax for the command is actually <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">main</span></code>. The complete command indicates changes should be pushed to the remote repository <code class="docutils literal notranslate"><span class="pre">origin</span></code> and to the branch <code class="docutils literal notranslate"><span class="pre">main</span></code>. The remote called <code class="docutils literal notranslate"><span class="pre">origin</span></code> would typically be the one shown when checking the remotes using the command <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">remote</span> <span class="pre">-v</span></code>. You can find more about branches in Git in the <a class="reference external" href="https://git-scm.com/docs/git-branch">Git Source Control Management documentation</a> <a class="footnote-reference brackets" href="appendix-2-git-github.html#branch" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a>.</p>
+</section>
+<section id="resolving-conflicts">
+<h3>Resolving conflicts<a class="headerlink" href="appendix-2-git-github.html#resolving-conflicts" title="Link to this heading">#</a></h3>
+<p>When merging files in Git it is sometimes the case that you encounter a <em><a class="reference internal" href="glossary.html#term-Git-merge-conflict"><span class="xref std std-term">merge conflict</span></a></em>. A merge conflict might happen if two users have edited the same content in a Git repository, or if you yourself have edited the same content both on GitHub and locally without properly synchronizing the changes. In short, Git will tell you that it is not able to figure out how to combine the changes by announcing a merge conflict. You will then have the task of manually editing together the changed sections of the file(s) to resolve the conflict. You can find more about merge conflicts in the <a class="reference external" href="https://git-scm.com/docs/git-merge#_how_to_resolve_conflicts">Git Source Control Management documentation</a> <a class="footnote-reference brackets" href="appendix-2-git-github.html#merge-conflicts" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a>.</p>
+<p>The key thing to remember with merge conflicts is: Don’t panic! It might be a bit frustrating to manually merge changes, but Git nicely identifies the sections of the file(s) that conflict and you can then decide which changes to keep and which to discard. After resolving the conflict you can then commit and push the merged files to get back in sync. A good way to limit the changes of a merge conflict is to always pull before you push!</p>
+<p><img alt="Figure A.X. The occasional reality of using Git. Source: https://xkcd.com/1597." src="../../_images/git-xkcd.png" /></p>
+<p><em><strong>Figure A.X</strong>. The occasional reality of using Git. Source: <a class="reference external" href="https://xkcd.com/1597">https://xkcd.com/1597</a>.</em></p>
+</section>
+</section>
+<section id="additional-resources">
+<h2>Additional resources<a class="headerlink" href="appendix-2-git-github.html#additional-resources" title="Link to this heading">#</a></h2>
+<p>More information about using Git and GitHub can be found at the following links:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.youtube.com/playlist?list=PL0lo9MOBetEFcp4SCWinBdpml9B2U25-f">GitHub for Beginners YouTube playlist</a></p></li>
+<li><p><a class="reference external" href="https://help.github.com/articles/good-resources-for-learning-git-and-github/">Git and GitHub learning resources</a></p></li>
+<li><p><a class="reference external" href="https://guides.github.com/activities/hello-world/">Tutorial on additional features of GitHub not covered in this appendix</a></p></li>
+<li><p><a class="reference external" href="https://www.geeksforgeeks.org/what-is-github-and-how-to-use-it/">GeeksForGeeks post: “What is GitHub and How to Use It?”</a></p></li>
+</ul>
+</section>
+<section id="footnotes">
+<h2>Footnotes<a class="headerlink" href="appendix-2-git-github.html#footnotes" title="Link to this heading">#</a></h2>
+</section>
+</section>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="versioncontrol" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="appendix-2-git-github.html#id1">1</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Version_control">https://en.wikipedia.org/wiki/Version_control</a></p>
+</aside>
+<aside class="footnote brackets" id="token" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="appendix-2-git-github.html#id2">2</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token">https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token</a></p>
+</aside>
+<aside class="footnote brackets" id="email" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="appendix-2-git-github.html#id3">3</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://docs.github.com/en/get-started/signing-up-for-github/verifying-your-email-address">https://docs.github.com/en/get-started/signing-up-for-github/verifying-your-email-address</a></p>
+</aside>
+<aside class="footnote brackets" id="command-line" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="appendix-2-git-github.html#id4">4</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://www.codecademy.com/articles/command-line-commands">https://www.codecademy.com/articles/command-line-commands</a></p>
+</aside>
+<aside class="footnote brackets" id="cheat-sheet" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="appendix-2-git-github.html#id5">5</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://education.github.com/git-cheat-sheet-education.pdf">https://education.github.com/git-cheat-sheet-education.pdf</a></p>
+</aside>
+<aside class="footnote brackets" id="remotes" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="appendix-2-git-github.html#id6">6</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes">https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes</a></p>
+</aside>
+<aside class="footnote brackets" id="branch" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="appendix-2-git-github.html#id7">7</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://git-scm.com/docs/git-branch">https://git-scm.com/docs/git-branch</a></p>
+</aside>
+<aside class="footnote brackets" id="merge-conflicts" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="appendix-2-git-github.html#id8">8</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://git-scm.com/docs/git-merge#_how_to_resolve_conflicts">https://git-scm.com/docs/git-merge#_how_to_resolve_conflicts</a></p>
+</aside>
+</aside>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "Python-GIS-book/site",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./back-matter/nb"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="appendix-1-best-practices.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Python programming best practices</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="appendix-3-script-files.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Using Python script files</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#the-problem">The problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#what-is-version-control">What is version control?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#what-is-git">What is Git?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#what-is-github">What is GitHub?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#basic-vocabulary">Basic vocabulary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#using-git-and-github">Using Git and GitHub</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#key-concepts">Key concepts</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#preparations">Preparations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#creating-a-personal-access-token">Creating a Personal Access Token</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#creating-a-fork-of-the-book-notebooks">Creating a fork of the book notebooks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#using-git-with-the-jupyterlab-git-extension">Using Git with the JupyterLab Git extension</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#cloning-a-repository">Cloning a repository</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#checking-the-git-status">Checking the Git status</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#making-changes">Making changes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#staging-changed-file-s">Staging changed file(s)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#committing-changes">Committing changes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#pushing-changes-to-github">Pushing changes to GitHub</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#using-git-from-the-command-line">Using Git from the command line</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#essential-command-line-tools">Essential command line tools</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#opening-a-terminal-window-in-juptyerlab">Opening a terminal window in JuptyerLab</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#configuring-your-git-credentials">Configuring your Git credentials</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#basic-git-commands">Basic Git commands</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#other-handy-git-topics">Other handy Git topics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#managing-remote-repositories">Managing remote repositories</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#branches">Branches</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#resolving-conflicts">Resolving conflicts</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#additional-resources">Additional resources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="appendix-2-git-github.html#footnotes">Footnotes</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Henrikki Tenkanen, Vuokko Heikinheimo, David Whipp
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2020-2025, Henrikki Tenkanen, Vuokko Heikinheimo, David Whipp.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js@digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js@digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
